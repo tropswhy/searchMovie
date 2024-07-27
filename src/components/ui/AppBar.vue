@@ -22,7 +22,10 @@ const sortHandler = (param) => {
         density="default"
         scroll-behavior="hide"
     >
-        <v-toolbar-title @click="$router.push('/')">
+        <v-toolbar-title
+            class="logo"
+            @click="$router.push('/')"
+        >
             ПоискКино
         </v-toolbar-title>
         <v-toolbar-items>
@@ -53,3 +56,9 @@ const sortHandler = (param) => {
         </v-toolbar-items>
     </v-toolbar>
 </template>
+
+<style lang="scss" scoped>
+.logo {
+    cursor: pointer;
+}
+</style>
