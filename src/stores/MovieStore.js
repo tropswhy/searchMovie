@@ -11,22 +11,26 @@ export const useMovieStore = defineStore('movieStore', {
 
     getters: {
         getTotalPages: (state) => Math.ceil(state.movies.docs.length / 25),
-        getMovieById: (state) => (id) => state.movies.docs.find((movie) => movie.externalId._id === id),
-        getMovieByName: (state) => (name) => state.movies.docs.find((movie.name.toLowerCas() === name.toLowerCase()))
+        getMovieById: (state) => (id) =>
+            state.movies.docs.find((movie) => movie.externalId._id === id),
+        getMovieByName: (state) => (name) =>
+            state.movies.docs.find(
+                movie.name.toLowerCas() === name.toLowerCase()
+            ),
         getMovieFromLS: () => (name) => JSON.parse(localStorage.getItem(name)),
-        getMarkedMovies: (state) => state.movies.docs.filter((movie) => {
-            let movieLS = state.getMovieFromLS(movie.name)
-            if (movieLS && movieLS.isMark) {
-                return true
-            } 
-            else {
-                return false
-            }
-        }),
+        getMarkedMovies: (state) =>
+            state.movies.docs.filter((movie) => {
+                let movieLS = state.getMovieFromLS(movie.name)
+                if (movieLS && movieLS.isMark) {
+                    return true
+                } else {
+                    return false
+                }
+            }),
     },
-    
+
     actions: {
-        sorting (movies) {
+        sorting(movies) {
             switch (this.currentSorting) {
                 case 'title': {
                     return movies.sort((m1, m2) =>
@@ -161,18 +165,24 @@ export const useMovieStore = defineStore('movieStore', {
         }, */
         addMovieToLocalStorage(movie) {
             console.log(movie)
-            localStorage.setItem(movie.name.toString(), JSON.stringify({
-                rating: 0,
-                isMark: false,
-            }))
+            localStorage.setItem(
+                movie.name.toString(),
+                JSON.stringify({
+                    rating: 0,
+                    isMark: false,
+                })
+            )
         },
-        changeDataAtLocalStorage(name, rating, mark){
+        changeDataAtLocalStorage(name, rating, mark) {
             //console.log(name, rating, mark)
             //console.log(this.getMarkedMovies)
-            localStorage.setItem(name, JSON.stringify({
-                rating: rating,
-                isMark: mark,
-            }))
+            localStorage.setItem(
+                name,
+                JSON.stringify({
+                    rating: rating,
+                    isMark: mark,
+                })
+            )
             //console.log(this.getMarkedMovies)
         },
     },
