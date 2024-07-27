@@ -4,58 +4,56 @@ import { ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import MovieCard from '../ui/MovieCard.vue'
 import AppBar from '../ui/AppBar.vue'
+
 window.scrollTo(0, 0)
+
 const movieStore = useMovieStore()
 const currentPage = ref(1)
 const MOVIES_PER_PAGE = 25
+
 const changePage = (page) => {
     currentPage.value = page
     window.scrollTo(0, 0)
 }
-/* const movieLS = ref({})
-const movies = movieStore.movies.docs */
-/* const markedMovies = computed(() =>
-    movies.filter((movie) => {
-        movieLS.value = JSON.parse(localStorage.getItem(movie.name))
-        if (movieLS.value && movieLS.value.isMark) {
-            console.log(movie.name)
-            console.log(movieLS.value)
-            return true
-        } else {
-            return false
-        }
-    })
-) */
-function unmark(name) {
-    //const movieLS = JSON.parse(localStorage.getItem(name))
-    console.log(name)
+
+function unmark(movieName) {
     movieStore.changeDataAtLocalStorage(
-        name,
-        JSON.parse(localStorage.getItem(name)).rating,
+        movieName,
+        JSON.parse(localStorage.getItem(movieName)).rating,
         false
     )
+    markedMovies.value = Object.keys(localStorage).reduce(
+        (accum, item) => {
+            if (JSON.parse(localStorage[item]).isMark) {
+                return [
+                    ...accum,
+                    movieStore.getMovieByName(item),
+                ]
+            }
+            return accum
+        },
+        []
+    )
 }
-//const markedMovies = computed(() => movieStore.getMarkedMovies)
+
+const markedMovies = ref(
+    Object.keys(localStorage).reduce((accum, item) => {
+        if (JSON.parse(localStorage[item]).isMark) {
+            return [
+                ...accum,
+                movieStore.getMovieByName(item),
+            ]
+        }
+        return accum
+    }, [])
+)
+
 const showMovies = computed(() => {
     const start = (currentPage.value - 1) * MOVIES_PER_PAGE
     const end = start + MOVIES_PER_PAGE
-        const m = movieStore.sorting(movieStore.getMarkedMovies)
-        //changePage(1)
-        return m.slice(start, end)
+    return movieStore.sorting(markedMovies.value).slice(start, end)
+
 })
-/* const unmark = computed(() => {
-    const movieLS = JSON.parse(localStorage.getItem(movie.name.toString()))
-    movieLS.isMark = false
-    localStorage.setItem(movie.name.toString(), JSON.stringify(movieLS))
-    markedMovies
-}) */
-/* const watchChangingLS =  */ /* watch(
-    () => [movieStore.getMarkedMovies],
-    (movies, prevMovies) => {
-        console.log(movies, prevMovies)
-    },
-    { deep: true }
-) */
 </script>
 
 <template>
@@ -81,8 +79,8 @@ const showMovies = computed(() => {
     <v-pagination
         v-model="currentPage"
         :length="
-            movieStore.getMarkedMovies.length
-                ? Math.ceil(movieStore.getMarkedMovies.length / MOVIES_PER_PAGE)
+            markedMovies.length
+                ? Math.ceil(markedMovies.length / MOVIES_PER_PAGE)
                 : 1
         "
         @update:modelValue="changePage"
