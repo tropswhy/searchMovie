@@ -12,14 +12,11 @@ export const useMovieStore = defineStore('movieStore', {
     getters: {
         getTotalPages: (state) => Math.ceil(state.movies.docs.length / 25),
         getMovieById: (state) => (id) => state.movies.docs.find((movie) => movie.externalId._id === id),
+        getMovieByName: (state) => (name) => state.movies.docs.find((movie.name.toLowerCas() === name.toLowerCase()))
         getMovieFromLS: () => (name) => JSON.parse(localStorage.getItem(name)),
         getMarkedMovies: (state) => state.movies.docs.filter((movie) => {
             let movieLS = state.getMovieFromLS(movie.name)
             if (movieLS && movieLS.isMark) {
-                    /* console.log(movieLS.isMark)
-                    console.log(movie.name) */
-                /* console.log(movie.name)
-                console.log(movieLS.value) */
                 return true
             } 
             else {
