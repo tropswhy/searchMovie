@@ -15,7 +15,7 @@ export const useMovieStore = defineStore('movieStore', {
             state.movies.docs.find((movie) => movie.externalId._id === id),
         getMovieByName: (state) => (name) =>
             state.movies.docs.find(
-                movie.name.toLowerCas() === name.toLowerCase()
+                (movie) => movie.name.toLowerCase() === name.toLowerCase()
             ),
         getMovieFromLS: () => (name) => JSON.parse(localStorage.getItem(name)),
         getMarkedMovies: (state) =>
