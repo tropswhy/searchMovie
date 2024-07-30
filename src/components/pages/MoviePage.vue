@@ -12,14 +12,21 @@ const forCheck = JSON.parse(localStorage.getItem(movie.value.name.toString()))
 window.scrollTo(0, 0)
 if (!forCheck || Object.keys(forCheck) === 0) {
     movieStore.addMovieToLocalStorage(movie.value)
-    movieLS.value = JSON.parse(localStorage.getItem(movie.value.name.toString()))
-}
-else {
-    movieLS.value = JSON.parse(localStorage.getItem(movie.value.name.toString()))
+    movieLS.value = JSON.parse(
+        localStorage.getItem(movie.value.name.toString())
+    )
+} else {
+    movieLS.value = JSON.parse(
+        localStorage.getItem(movie.value.name.toString())
+    )
 }
 function changeMark() {
     movieLS.value.isMark = !movieLS.value.isMark
-    movieStore.changeDataAtLocalStorage(movie.value.name, movieLS.value.rating,  movieLS.value.isMark)
+    movieStore.changeDataAtLocalStorage(
+        movie.value.name,
+        movieLS.value.rating,
+        movieLS.value.isMark
+    )
 }
 const aboutMovie = [
     {
@@ -119,7 +126,13 @@ const aboutMovie = [
                                 length="10"
                                 clearable
                                 class="mb-0"
-                                @update:modelValue="movieStore.changeDataAtLocalStorage(movie.name, movieLS.rating, movieLS.isMark)"
+                                @update:modelValue="
+                                    movieStore.changeDataAtLocalStorage(
+                                        movie.name,
+                                        movieLS.rating,
+                                        movieLS.isMark
+                                    )
+                                "
                             />
                         </v-card-action>
                     </v-container>

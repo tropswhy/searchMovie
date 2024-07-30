@@ -1,7 +1,6 @@
 <script setup>
 import { useMovieStore } from '../../stores/MovieStore.js'
-import { ref, computed, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, computed} from 'vue'
 import MovieCard from '../ui/MovieCard.vue'
 import AppBar from '../ui/AppBar.vue'
 
@@ -88,5 +87,3 @@ const showMovies = computed(() => {
         @update:modelValue="changePage"
     />
 </template>
-
-<style lang="scss" scoped></style>
