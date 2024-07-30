@@ -22,27 +22,18 @@ function unmark(movieName) {
         JSON.parse(localStorage.getItem(movieName)).rating,
         false
     )
-    markedMovies.value = Object.keys(localStorage).reduce(
-        (accum, item) => {
-            if (JSON.parse(localStorage[item]).isMark) {
-                return [
-                    ...accum,
-                    movieStore.getMovieByName(item),
-                ]
-            }
-            return accum
-        },
-        []
-    )
+    markedMovies.value = Object.keys(localStorage).reduce((accum, item) => {
+        if (JSON.parse(localStorage[item]).isMark) {
+            return [...accum, movieStore.getMovieByName(item)]
+        }
+        return accum
+    }, [])
 }
 
 const markedMovies = ref(
     Object.keys(localStorage).reduce((accum, item) => {
         if (JSON.parse(localStorage[item]).isMark) {
-            return [
-                ...accum,
-                movieStore.getMovieByName(item),
-            ]
+            return [...accum, movieStore.getMovieByName(item)]
         }
         return accum
     }, [])
@@ -52,13 +43,12 @@ const showMovies = computed(() => {
     const start = (currentPage.value - 1) * MOVIES_PER_PAGE
     const end = start + MOVIES_PER_PAGE
     return movieStore.sorting(markedMovies.value).slice(start, end)
-
 })
 </script>
 
 <template>
     <AppBar />
-    <v-container>
+    <v-container v-if="showMovies.length > 0">
         <v-row justify="start">
             <v-col
                 class="text-center"
@@ -75,6 +65,18 @@ const showMovies = computed(() => {
                 />
             </v-col>
         </v-row>
+    </v-container>
+    <v-container v-else>
+        <v-alert
+            class="mx-auto mb-20"
+            position="relative"
+            rounded
+            tonal
+            max-width="450"
+            min-width="250"
+            title="Здесь пока что пусто"
+            text="Вы ещё ничего не добавили в закладки"
+        />
     </v-container>
     <v-pagination
         v-model="currentPage"
