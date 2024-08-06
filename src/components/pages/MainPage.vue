@@ -16,17 +16,17 @@
         rounded
       />
     </v-responsive>
-    <v-container>
+    <v-container class="text-center">
       <v-row
         v-if="showMovies.length > 0"
+        no-gutters
         justify="start"
         align="center"
       >
         <v-col
           class="text-center"
           v-for="movie in showMovies"
-          :key="movie.id"
-          cols="2.5"
+          cols="auto"
         >
           <MovieCard
             :name="movie.name"
@@ -88,7 +88,7 @@ const showMovies = computed(() => {
     return m.slice(start, end)
   } else {
     const m = movieStore.sorting(searchMovies.value)
-    changePage(1)
+    //changePage(1)
     return m.slice(start, end)
   }
 })
@@ -99,3 +99,10 @@ const paginationLength = computed(() =>
 )
 changePage(1)
 </script>
+
+<style scoped>
+.v-col {
+  width: 225px;
+  max-width: 225px;
+}
+</style>
