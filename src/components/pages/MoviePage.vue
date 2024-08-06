@@ -1,63 +1,3 @@
-<script setup>
-import { useMovieStore } from '../../stores/MovieStore.js'
-import { computed, ref } from 'vue'
-import { useRoute } from 'vue-router'
-import AppBar from '../ui/AppBar.vue'
-const movieStore = useMovieStore()
-const route = useRoute()
-const movieId = computed(() => route.params.movieId)
-const movie = computed(() => movieStore.getMovieById(movieId.value))
-const movieLS = ref({})
-const forCheck = JSON.parse(localStorage.getItem(movie.value.name.toString()))
-window.scrollTo(0, 0)
-if (!forCheck || Object.keys(forCheck) === 0) {
-  movieStore.addMovieToLocalStorage(movie.value)
-  movieLS.value = JSON.parse(localStorage.getItem(movie.value.name.toString()))
-} else {
-  movieLS.value = JSON.parse(localStorage.getItem(movie.value.name.toString()))
-}
-function changeMark() {
-  movieLS.value.isMark = !movieLS.value.isMark
-  movieStore.changeDataAtLocalStorage(
-    movie.value.name,
-    movieLS.value.rating,
-    movieLS.value.isMark
-  )
-}
-const aboutMovie = [
-  {
-    title: 'Год производства: ',
-    value: movie.value.year,
-  },
-  {
-    title: 'Длительность: ',
-    value: movie.value.movieLength + ' минут',
-  },
-  {
-    title: 'Оценка на КиноПоиске: ',
-    value: movie.value.rating.kp,
-  },
-  {
-    title: 'Оценка на IMDb: ',
-    value: movie.value.rating.imdb,
-  },
-  {
-    title: 'Рейтинг критиков: ',
-    value:
-      movie.value.rating.filmCritics > 0
-        ? movie.value.rating.filmCritics
-        : 'Рейтинг отсутствует',
-  },
-  {
-    title: 'Рейтинг российских критиков: ',
-    value:
-      movie.value.rating.russianFilmCritics > 0
-        ? movie.value.rating.russianFilmCritics
-        : 'Рейтинг отсутствует',
-  },
-]
-</script>
-
 <template>
   <AppBar />
   <v-card
@@ -142,3 +82,63 @@ const aboutMovie = [
   >
   </v-card>
 </template>
+
+<script setup>
+import { useMovieStore } from '../../stores/MovieStore.js'
+import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import AppBar from '../ui/AppBar.vue'
+const movieStore = useMovieStore()
+const route = useRoute()
+const movieId = computed(() => route.params.movieId)
+const movie = computed(() => movieStore.getMovieById(movieId.value))
+const movieLS = ref({})
+const forCheck = JSON.parse(localStorage.getItem(movie.value.name.toString()))
+window.scrollTo(0, 0)
+if (!forCheck || Object.keys(forCheck) === 0) {
+  movieStore.addMovieToLocalStorage(movie.value)
+  movieLS.value = JSON.parse(localStorage.getItem(movie.value.name.toString()))
+} else {
+  movieLS.value = JSON.parse(localStorage.getItem(movie.value.name.toString()))
+}
+function changeMark() {
+  movieLS.value.isMark = !movieLS.value.isMark
+  movieStore.changeDataAtLocalStorage(
+    movie.value.name,
+    movieLS.value.rating,
+    movieLS.value.isMark
+  )
+}
+const aboutMovie = [
+  {
+    title: 'Год производства: ',
+    value: movie.value.year,
+  },
+  {
+    title: 'Длительность: ',
+    value: movie.value.movieLength + ' минут',
+  },
+  {
+    title: 'Оценка на КиноПоиске: ',
+    value: movie.value.rating.kp,
+  },
+  {
+    title: 'Оценка на IMDb: ',
+    value: movie.value.rating.imdb,
+  },
+  {
+    title: 'Рейтинг критиков: ',
+    value:
+      movie.value.rating.filmCritics > 0
+        ? movie.value.rating.filmCritics
+        : 'Рейтинг отсутствует',
+  },
+  {
+    title: 'Рейтинг российских критиков: ',
+    value:
+      movie.value.rating.russianFilmCritics > 0
+        ? movie.value.rating.russianFilmCritics
+        : 'Рейтинг отсутствует',
+  },
+]
+</script>

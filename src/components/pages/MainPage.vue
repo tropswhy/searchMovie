@@ -1,40 +1,3 @@
-<script setup>
-import { useMovieStore } from '../../stores/MovieStore.js'
-import { ref, computed } from 'vue'
-import MovieCard from '../ui/MovieCard.vue'
-import AppBar from '../ui/AppBar.vue'
-const movieStore = useMovieStore()
-const movies = ref(movieStore.movies)
-const currentPage = ref(1)
-const search = ref('')
-const MOVIES_PER_PAGE = 25
-const changePage = (page) => {
-  currentPage.value = page
-  window.scrollTo(0, 0)
-}
-const searchMovies = computed(() => {
-  if (search.value) {
-    return movies.value.docs.filter((movie) =>
-      movie.name.toLowerCase().includes(search.value.toLowerCase())
-    )
-  } else {
-    return movies.value.docs
-  }
-})
-const showMovies = computed(() => {
-  const start = (currentPage.value - 1) * MOVIES_PER_PAGE
-  const end = start + MOVIES_PER_PAGE
-  if (!search.value) {
-    const m = movieStore.sorting(movies.value.docs)
-    return m.slice(start, end)
-  } else {
-    const m = movieStore.sorting(searchMovies.value)
-    changePage(1)
-    return m.slice(start, end)
-  }
-})
-changePage(1)
-</script>
 <template>
   <v-app>
     <AppBar />
@@ -97,3 +60,41 @@ changePage(1)
     />
   </v-app>
 </template>
+
+<script setup>
+import { useMovieStore } from '../../stores/MovieStore.js'
+import { ref, computed } from 'vue'
+import MovieCard from '../ui/MovieCard.vue'
+import AppBar from '../ui/AppBar.vue'
+const movieStore = useMovieStore()
+const movies = ref(movieStore.movies)
+const currentPage = ref(1)
+const search = ref('')
+const MOVIES_PER_PAGE = 25
+const changePage = (page) => {
+  currentPage.value = page
+  window.scrollTo(0, 0)
+}
+const searchMovies = computed(() => {
+  if (search.value) {
+    return movies.value.docs.filter((movie) =>
+      movie.name.toLowerCase().includes(search.value.toLowerCase())
+    )
+  } else {
+    return movies.value.docs
+  }
+})
+const showMovies = computed(() => {
+  const start = (currentPage.value - 1) * MOVIES_PER_PAGE
+  const end = start + MOVIES_PER_PAGE
+  if (!search.value) {
+    const m = movieStore.sorting(movies.value.docs)
+    return m.slice(start, end)
+  } else {
+    const m = movieStore.sorting(searchMovies.value)
+    changePage(1)
+    return m.slice(start, end)
+  }
+})
+changePage(1)
+</script>

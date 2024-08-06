@@ -1,8 +1,3 @@
-<script setup>
-const emit = defineEmits(['unmarkMovie'])
-const movie = defineProps(['name', 'score', 'year', 'poster', 'id'])
-</script>
-
 <template>
   <v-card
     class="ma-1 pa-1"
@@ -51,3 +46,8 @@ const movie = defineProps(['name', 'score', 'year', 'poster', 'id'])
     </div>
   </v-card>
 </template>
+
+<script setup>
+const emit = defineEmits(['unmarkMovie'])
+const movie = defineProps(['name', 'score', 'year', 'poster', 'id'])
+</script>
