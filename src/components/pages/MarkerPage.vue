@@ -52,7 +52,7 @@ const showMovies = computed(() => {
       <v-col
         class="text-center"
         v-for="movie in showMovies"
-        :key="movie.name"
+        :key="movie.id"
       >
         <MovieCard
           :name="movie.name"

@@ -62,7 +62,7 @@ changePage(1)
         <v-col
           class="text-center"
           v-for="movie in showMovies"
-          :key="movie.name"
+          :key="movie.id"
           cols="2.5"
         >
           <MovieCard
