@@ -6,6 +6,7 @@
         class="text-center"
         v-for="movie in showMovies"
         :key="movie.id"
+        cols="auto"
       >
         <MovieCard
           :name="movie.name"
@@ -32,9 +33,7 @@
   </v-container>
   <v-pagination
     v-model="currentPage"
-    :length="
-      markedMovies.length ? Math.ceil(markedMovies.length / MOVIES_PER_PAGE) : 1
-    "
+    :length="paginationLength"
     @update:modelValue="changePage"
   />
 </template>
@@ -84,4 +83,14 @@ const showMovies = computed(() => {
   const end = start + MOVIES_PER_PAGE
   return movieStore.sorting(markedMovies.value).slice(start, end)
 })
+
+const paginationLength = computed(() =>
+  markedMovies.length ? Math.ceil(markedMovies.length / MOVIES_PER_PAGE) : 1
+)
 </script>
+<style scoped>
+.v-col {
+  width: 225px;
+  max-width: 225px;
+}
+</style>
