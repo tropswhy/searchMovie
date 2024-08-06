@@ -9,91 +9,91 @@ const currentPage = ref(1)
 const search = ref('')
 const MOVIES_PER_PAGE = 25
 const changePage = (page) => {
-    currentPage.value = page
-    window.scrollTo(0, 0)
+  currentPage.value = page
+  window.scrollTo(0, 0)
 }
 const searchMovies = computed(() => {
-    if (search.value) {
-        return movies.value.docs.filter((movie) =>
-            movie.name.toLowerCase().includes(search.value.toLowerCase())
-        )
-    } else {
-        return movies.value.docs
-    }
+  if (search.value) {
+    return movies.value.docs.filter((movie) =>
+      movie.name.toLowerCase().includes(search.value.toLowerCase())
+    )
+  } else {
+    return movies.value.docs
+  }
 })
 const showMovies = computed(() => {
-    const start = (currentPage.value - 1) * MOVIES_PER_PAGE
-    const end = start + MOVIES_PER_PAGE
-    if (!search.value) {
-        const m = movieStore.sorting(movies.value.docs)
-        return m.slice(start, end)
-    } else {
-        const m = movieStore.sorting(searchMovies.value)
-        changePage(1)
-        return m.slice(start, end)
-    }
+  const start = (currentPage.value - 1) * MOVIES_PER_PAGE
+  const end = start + MOVIES_PER_PAGE
+  if (!search.value) {
+    const m = movieStore.sorting(movies.value.docs)
+    return m.slice(start, end)
+  } else {
+    const m = movieStore.sorting(searchMovies.value)
+    changePage(1)
+    return m.slice(start, end)
+  }
 })
 changePage(1)
 </script>
 <template>
-    <v-app>
-        <AppBar />
-        <v-responsive
-            class="mx-auto mt-4"
-            width="500px"
-            max-height="70px"
+  <v-app>
+    <AppBar />
+    <v-responsive
+      class="mx-auto mt-4"
+      width="500px"
+      max-height="70px"
+    >
+      <v-text-field
+        v-model="search"
+        class="my-2"
+        label="Поиск"
+        variant="outlined"
+        clearable
+        prepend-inner-icon="mdi-magnify"
+        rounded
+      />
+    </v-responsive>
+    <v-container>
+      <v-row
+        v-if="showMovies.length > 0"
+        justify="start"
+        align="center"
+      >
+        <v-col
+          class="text-center"
+          v-for="movie in showMovies"
+          :key="movie.name"
+          cols="2.5"
         >
-            <v-text-field
-                v-model="search"
-                class="my-2"
-                label="Поиск"
-                variant="outlined"
-                clearable
-                prepend-inner-icon="mdi-magnify"
-                rounded
-            />
-        </v-responsive>
-        <v-container>
-            <v-row
-                v-if="showMovies.length > 0"
-                justify="start"
-                align="center"
-            >
-                <v-col
-                    class="text-center"
-                    v-for="movie in showMovies"
-                    :key="movie.name"
-                    cols="2.5"
-                >
-                    <MovieCard
-                        :name="movie.name"
-                        :score="movieStore.countAverageScore(movie)"
-                        :year="movie.year"
-                        :poster="movie.poster.previewUrl"
-                        :id="movie.externalId._id"
-                    />
-                </v-col>
-            </v-row>
-            <v-alert
-                v-else
-                class="mx-auto mb-20"
-                position="relative"
-                rounded
-                tonal
-                max-width="450"
-                min-width="250"
-                title="Ничего не найдено"
-                text="К сожалению, фильма с таким названием нет. Попробуйте поискать что-нибудь другое."
-            />
-        </v-container>
-        <v-pagination
-            v-model="currentPage"
-            :length="
-                searchMovies.length
-                    ? Math.ceil(searchMovies.length / MOVIES_PER_PAGE)
-                    : 1
-            "
-            @update:modelValue="changePage"
-        />
-    </v-app>
+          <MovieCard
+            :name="movie.name"
+            :score="movieStore.countAverageScore(movie)"
+            :year="movie.year"
+            :poster="movie.poster.previewUrl"
+            :id="movie.externalId._id"
+          />
+        </v-col>
+      </v-row>
+      <v-alert
+        v-else
+        class="mx-auto mb-20"
+        position="relative"
+        rounded
+        tonal
+        max-width="450"
+        min-width="250"
+        title="Ничего не найдено"
+        text="К сожалению, фильма с таким названием нет. Попробуйте поискать что-нибудь другое."
+      />
+    </v-container>
+    <v-pagination
+      v-model="currentPage"
+      :length="
+        searchMovies.length
+          ? Math.ceil(searchMovies.length / MOVIES_PER_PAGE)
+          : 1
+      "
+      @update:modelValue="changePage"
+    />
+  </v-app>
 </template>

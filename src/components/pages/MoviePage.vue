@@ -11,142 +11,134 @@ const movieLS = ref({})
 const forCheck = JSON.parse(localStorage.getItem(movie.value.name.toString()))
 window.scrollTo(0, 0)
 if (!forCheck || Object.keys(forCheck) === 0) {
-    movieStore.addMovieToLocalStorage(movie.value)
-    movieLS.value = JSON.parse(
-        localStorage.getItem(movie.value.name.toString())
-    )
+  movieStore.addMovieToLocalStorage(movie.value)
+  movieLS.value = JSON.parse(localStorage.getItem(movie.value.name.toString()))
 } else {
-    movieLS.value = JSON.parse(
-        localStorage.getItem(movie.value.name.toString())
-    )
+  movieLS.value = JSON.parse(localStorage.getItem(movie.value.name.toString()))
 }
 function changeMark() {
-    movieLS.value.isMark = !movieLS.value.isMark
-    movieStore.changeDataAtLocalStorage(
-        movie.value.name,
-        movieLS.value.rating,
-        movieLS.value.isMark
-    )
+  movieLS.value.isMark = !movieLS.value.isMark
+  movieStore.changeDataAtLocalStorage(
+    movie.value.name,
+    movieLS.value.rating,
+    movieLS.value.isMark
+  )
 }
 const aboutMovie = [
-    {
-        title: 'Год производства: ',
-        value: movie.value.year,
-    },
-    {
-        title: 'Длительность: ',
-        value: movie.value.movieLength + ' минут',
-    },
-    {
-        title: 'Оценка на КиноПоиске: ',
-        value: movie.value.rating.kp,
-    },
-    {
-        title: 'Оценка на IMDb: ',
-        value: movie.value.rating.imdb,
-    },
-    {
-        title: 'Рейтинг критиков: ',
-        value:
-            movie.value.rating.filmCritics > 0
-                ? movie.value.rating.filmCritics
-                : 'Рейтинг отсутствует',
-    },
-    {
-        title: 'Рейтинг российских критиков: ',
-        value:
-            movie.value.rating.russianFilmCritics > 0
-                ? movie.value.rating.russianFilmCritics
-                : 'Рейтинг отсутствует',
-    },
+  {
+    title: 'Год производства: ',
+    value: movie.value.year,
+  },
+  {
+    title: 'Длительность: ',
+    value: movie.value.movieLength + ' минут',
+  },
+  {
+    title: 'Оценка на КиноПоиске: ',
+    value: movie.value.rating.kp,
+  },
+  {
+    title: 'Оценка на IMDb: ',
+    value: movie.value.rating.imdb,
+  },
+  {
+    title: 'Рейтинг критиков: ',
+    value:
+      movie.value.rating.filmCritics > 0
+        ? movie.value.rating.filmCritics
+        : 'Рейтинг отсутствует',
+  },
+  {
+    title: 'Рейтинг российских критиков: ',
+    value:
+      movie.value.rating.russianFilmCritics > 0
+        ? movie.value.rating.russianFilmCritics
+        : 'Рейтинг отсутствует',
+  },
 ]
 </script>
 
 <template>
-    <AppBar />
-    <v-card
-        class="my-5 mx-auto"
-        :title="movie.name"
-        :subtitle="movie.alternativeName"
-        width="1000"
-    >
-        <template v-slot:append>
-            <v-btn
-                width="250px"
-                :text="
-                    movieLS.isMark
-                        ? 'Убрать из закладок'
-                        : 'Добавить в закладки'
-                "
-                :prepend-icon="
-                    movieLS.isMark
-                        ? 'mdi-bookmark-remove-outline'
-                        : 'mdi-bookmark-plus-outline'
-                "
-                @click="changeMark()"
-            />
-        </template>
-        <v-divider />
-        <v-container>
-            <v-row
-                justify="start"
-                class="mb-5"
-                no-gutters
+  <AppBar />
+  <v-card
+    class="my-5 mx-auto"
+    :title="movie.name"
+    :subtitle="movie.alternativeName"
+    width="1000"
+  >
+    <template v-slot:append>
+      <v-btn
+        width="250px"
+        :text="movieLS.isMark ? 'Убрать из закладок' : 'Добавить в закладки'"
+        :prepend-icon="
+          movieLS.isMark
+            ? 'mdi-bookmark-remove-outline'
+            : 'mdi-bookmark-plus-outline'
+        "
+        @click="changeMark()"
+      />
+    </template>
+    <v-divider />
+    <v-container>
+      <v-row
+        justify="start"
+        class="mb-5"
+        no-gutters
+      >
+        <v-col cols="4">
+          <v-img
+            :src="movie.poster.url"
+            height="auto"
+            width="300px"
+            cover
+          />
+        </v-col>
+        <v-col>
+          <h3 class="ml-4">О фильме:</h3>
+          <v-list lines="one">
+            <v-list-item
+              v-for="(item, i) in aboutMovie"
+              :key="i"
+              :title="item.title + item.value"
+              :value="item.value"
             >
-                <v-col cols="4">
-                    <v-img
-                        :src="movie.poster.url"
-                        height="auto"
-                        width="300px"
-                        cover
-                    />
-                </v-col>
-                <v-col>
-                    <h3 class="ml-4">О фильме:</h3>
-                    <v-list lines="one">
-                        <v-list-item
-                            v-for="(item, i) in aboutMovie"
-                            :key="i"
-                            :title="item.title + item.value"
-                            :value="item.value"
-                        >
-                            <v-divider />
-                        </v-list-item>
-                    </v-list>
-                    <v-container class="text-center">
-                        <v-card-action>
-                            <div class="d-flex">
-                                Оценка пользователя:
-                                {{ movieLS.rating > 0 ? movieLS.rating : '' }}
-                            </div>
-                            <v-rating
-                                v-model="movieLS.rating"
-                                hover
-                                half-increments
-                                length="10"
-                                clearable
-                                class="mb-0"
-                                @update:modelValue="
-                                    movieStore.changeDataAtLocalStorage(
-                                        movie.name,
-                                        movieLS.rating,
-                                        movieLS.isMark
-                                    )
-                                "
-                            />
-                        </v-card-action>
-                    </v-container>
-                </v-col>
-            </v-row>
-            <v-divider />
-            <strong>Описание:</strong>
-            <p class="mx-auto">{{ movie.description }}</p>
-        </v-container>
-    </v-card>
-    <v-card
-        title="Вам также может понравится:"
-        class="my-5 mx-auto"
-        width="1000"
-    >
-    </v-card>
+              <v-divider />
+            </v-list-item>
+          </v-list>
+          <v-container class="text-center">
+            <v-card-action>
+              <div class="d-flex">
+                Оценка пользователя:
+                {{ movieLS.rating > 0 ? movieLS.rating : '' }}
+              </div>
+              <v-rating
+                v-model="movieLS.rating"
+                hover
+                half-increments
+                length="10"
+                clearable
+                class="mb-0"
+                @update:modelValue="
+                  movieStore.changeDataAtLocalStorage(
+                    movie.name,
+                    movieLS.rating,
+                    movieLS.isMark
+                  )
+                "
+              />
+            </v-card-action>
+          </v-container>
+        </v-col>
+      </v-row>
+      <v-divider />
+      <strong>Описание:</strong>
+      <p class="mx-auto">{{ movie.description }}</p>
+    </v-container>
+  </v-card>
+  <v-card
+    title="Вам также может понравится:"
+    class="my-5 mx-auto"
+    width="1000"
+  >
+  </v-card>
 </template>

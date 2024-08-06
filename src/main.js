@@ -12,31 +12,31 @@ import MoviePage from './components/pages/MoviePage.vue'
 import '@mdi/font/css/materialdesignicons.css'
 
 const vuetify = createVuetify({
-    components,
-    directives,
-    iconfont: 'mdi',
+  components,
+  directives,
+  iconfont: 'mdi',
 })
 
 const pinia = createPinia()
 
 const routes = [
-    {
-        path: '/',
-        component: MainPage,
-    },
-    {
-        path: '/movie/:movieId',
-        name: 'movieCard',
-        component: MoviePage,
-    },
-    {
-        path: '/markers',
-        component: MarkerPage,
-    },
+  {
+    path: '/',
+    component: MainPage,
+  },
+  {
+    path: '/movie/:movieId',
+    name: 'movieCard',
+    component: MoviePage,
+  },
+  {
+    path: '/markers',
+    component: MarkerPage,
+  },
 ]
 const router = createRouter({
-    history: createWebHistory(),
-    routes,
+  history: createWebHistory(),
+  routes,
 })
 
 const app = createApp(App)
