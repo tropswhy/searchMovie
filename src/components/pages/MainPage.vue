@@ -51,11 +51,7 @@
     </v-container>
     <v-pagination
       v-model="currentPage"
-      :length="
-        searchMovies.length
-          ? Math.ceil(searchMovies.length / MOVIES_PER_PAGE)
-          : 1
-      "
+      :length="paginationLength"
       @update:modelValue="changePage"
     />
   </v-app>
@@ -96,5 +92,10 @@ const showMovies = computed(() => {
     return m.slice(start, end)
   }
 })
+const paginationLength = computed(() =>
+  searchMovies.value.length
+    ? Math.ceil(searchMovies.value.length / MOVIES_PER_PAGE)
+    : 1
+)
 changePage(1)
 </script>
