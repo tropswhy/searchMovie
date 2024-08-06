@@ -19,7 +19,6 @@
     <v-container class="text-center">
       <v-row
         v-if="showMovies.length > 0"
-        no-gutters
         justify="start"
         align="center"
       >
