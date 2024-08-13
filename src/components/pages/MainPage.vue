@@ -14,6 +14,7 @@
         clearable
         prepend-inner-icon="mdi-magnify"
         rounded
+        @update:modelValue="changePage(1)"
       />
     </v-responsive>
     <v-container class="text-center">
