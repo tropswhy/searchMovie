@@ -12,7 +12,7 @@ export const useMovieStore = defineStore('movieStore', {
   getters: {
     getTotalPages: (state) => Math.ceil(state.movies.docs.length / 25),
     getMovieById: (state) => (id) =>
-      state.movies.docs.find((movie) => movie.externalId._id === id),
+      state.movies.docs.find((movie) => movie.id === Number(id)),
     getMovieByName: (state) => (name) =>
       state.movies.docs.find(
         (movie) => movie.name.toLowerCase() === name.toLowerCase()

@@ -13,7 +13,7 @@
           :score="movieStore.countAverageScore(movie)"
           :year="movie.year"
           :poster="movie.poster.previewUrl"
-          :id="movie.externalId._id"
+          :id="movie.id"
           @unmark-movie="unmark(movie.name)"
         />
       </v-col>

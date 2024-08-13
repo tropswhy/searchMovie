@@ -40,19 +40,18 @@
 
 <script setup>
 import { useMovieStore } from '../../stores/MovieStore.js'
-import { ref, computed } from 'vue'
 const sortingParametrs = [
   { title: 'По названию', parametr: 'title' },
   { title: 'По году выхода', parametr: 'year' },
   { title: 'По средней оценке', parametr: 'score' },
   { title: 'По хронометражу', parametr: 'timing' },
 ]
-const MovieStore = useMovieStore()
+const movieStore = useMovieStore()
 const sortHandler = (param) => {
-  if (param === MovieStore.currentSorting) {
-    MovieStore.currentSorting = '-' + param
+  if (param === movieStore.currentSorting) {
+    movieStore.currentSorting = '-' + param
   } else {
-    MovieStore.currentSorting = param
+    movieStore.currentSorting = param
   }
 }
 </script>

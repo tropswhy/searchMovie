@@ -19,7 +19,6 @@
     <v-container class="text-center">
       <v-row
         v-if="showMovies.length > 0"
-        no-gutters
         justify="start"
         align="center"
       >
@@ -33,7 +32,7 @@
             :score="movieStore.countAverageScore(movie)"
             :year="movie.year"
             :poster="movie.poster.previewUrl"
-            :id="movie.externalId._id"
+            :id="movie.id"
           />
         </v-col>
       </v-row>

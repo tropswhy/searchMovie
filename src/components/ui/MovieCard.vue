@@ -13,8 +13,8 @@
       text="Убрать из закладок"
       density="compact"
       append-icon="mdi-bookmark-remove-outline"
-      @click="$emit('unmarkMovie', movie.name)"
       outlined
+      @click="$emit('unmarkMovie', movie.name)"
     />
     <div
       @click="
