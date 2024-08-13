@@ -9,12 +9,8 @@
     <template v-slot:append>
       <v-btn
         width="250px"
-        :text="movieLS.isMark ? 'Убрать из закладок' : 'Добавить в закладки'"
-        :prepend-icon="
-          movieLS.isMark
-            ? 'mdi-bookmark-remove-outline'
-            : 'mdi-bookmark-plus-outline'
-        "
+        :text="checkTextMark"
+        :prepend-icon="checkIconMark"
         @click="changeMark()"
       />
     </template>
@@ -99,7 +95,6 @@ const forCheck = JSON.parse(localStorage.getItem(movieId.value.toString()))
 window.scrollTo(0, 0)
 if (!forCheck || Object.keys(forCheck) === 0) {
   movieStore.addMovieToLocalStorage(movie.value)
-  //movieLS.value = JSON.parse(localStorage.getItem(movieId.value.toString()))
 }
 movieLS.value = JSON.parse(localStorage.getItem(movieId.value.toString()))
 function changeMark() {
@@ -111,6 +106,14 @@ function changeMark() {
     movieLS.value.isMark
   )
 }
+const checkTextMark = computed(() =>
+  movieLS.value.isMark ? 'Убрать из закладок' : 'Добавить в закладки'
+)
+const checkIconMark = computed(() =>
+  movieLS.value.isMark
+    ? 'mdi-bookmark-remove-outline'
+    : 'mdi-bookmark-plus-outline'
+)
 const aboutMovie = [
   {
     title: 'Год производства: ',
