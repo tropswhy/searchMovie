@@ -29,7 +29,7 @@ export const useMovieStore = defineStore('movieStore', {
       switch (this.currentSorting) {
         case 'title': {
           return movies.sort((m1, m2) =>
-            m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1
+            m1.name.localeCompare(m2.name) //m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1
           )
         }
         case 'year': {
@@ -39,7 +39,7 @@ export const useMovieStore = defineStore('movieStore', {
             } else if (m1.year < m2.year) {
               return -1
             } else {
-              return m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1
+              return m1.name.localeCompare(m2.name) // m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1
             }
           })
         }
@@ -52,7 +52,7 @@ export const useMovieStore = defineStore('movieStore', {
             ) {
               return -1
             } else {
-              return m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1 //0
+              return m1.name.localeCompare(m2.name) // m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1 //0
             }
           })
         }
@@ -63,13 +63,13 @@ export const useMovieStore = defineStore('movieStore', {
             } else if (m1.movieLength < m2.movieLength) {
               return -1
             } else {
-              return m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1
+              m1.name.localeCompare(m2.name) // return m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1
             }
           })
         }
         case '-title': {
           return movies.sort((m2, m1) =>
-            m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1
+            m1.name.localeCompare(m2.name) //m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1
           )
         }
         case '-year': {
@@ -79,7 +79,7 @@ export const useMovieStore = defineStore('movieStore', {
             } else if (m1.year < m2.year) {
               return -1
             } else {
-              return m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1
+              return m1.name.localeCompare(m2.name) //m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1
             }
           })
         }
@@ -92,7 +92,7 @@ export const useMovieStore = defineStore('movieStore', {
             ) {
               return -1
             } else {
-              return m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1 //0
+              return m1.name.localeCompare(m2.name) //m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1 //0
             }
           })
         }
@@ -103,7 +103,7 @@ export const useMovieStore = defineStore('movieStore', {
             } else if (m1.movieLength < m2.movieLength) {
               return -1
             } else {
-              return m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1
+              return m1.name.localeCompare(m2.name) //m1.name.toLowerCase() > m2.name.toLowerCase() ? 1 : -1
             }
           })
         }
