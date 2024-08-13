@@ -14,7 +14,7 @@
           :year="movie.year"
           :poster="movie.poster.previewUrl"
           :id="movie.id"
-          @unmark-movie="unmark(movie.name)"
+          @unmark-movie="unmark(movie)"
         />
       </v-col>
     </v-row>
@@ -55,15 +55,16 @@ const changePage = (page) => {
   window.scrollTo(0, 0)
 }
 
-function unmark(movieName) {
+function unmark(movie) {
   movieStore.changeDataAtLocalStorage(
-    movieName,
-    JSON.parse(localStorage.getItem(movieName)).rating,
+    movie.id,
+    movie.name,
+    JSON.parse(localStorage.getItem(movie.id)).rating,
     false
   )
   markedMovies.value = Object.keys(localStorage).reduce((accum, item) => {
     if (JSON.parse(localStorage[item]).isMark) {
-      return [...accum, movieStore.getMovieByName(item)]
+      return [...accum, movieStore.getMovieById(item)]
     }
     return accum
   }, [])
@@ -72,7 +73,7 @@ function unmark(movieName) {
 const markedMovies = ref(
   Object.keys(localStorage).reduce((accum, item) => {
     if (JSON.parse(localStorage[item]).isMark) {
-      return [...accum, movieStore.getMovieByName(item)]
+      return [...accum, movieStore.getMovieById(item)]
     }
     return accum
   }, [])

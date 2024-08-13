@@ -143,17 +143,19 @@ export const useMovieStore = defineStore('movieStore', {
     addMovieToLocalStorage(movie) {
       console.log(movie)
       localStorage.setItem(
-        movie.name.toString(),
+        movie.id,
         JSON.stringify({
+          name: movie.name.toString(),
           rating: 0,
           isMark: false,
         })
       )
     },
-    changeDataAtLocalStorage(name, rating, mark) {
+    changeDataAtLocalStorage(id, name, rating, mark) {
       localStorage.setItem(
-        name,
+        id,
         JSON.stringify({
+          name: name,
           rating: rating,
           isMark: mark,
         })

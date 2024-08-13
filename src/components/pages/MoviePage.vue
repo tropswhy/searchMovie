@@ -60,6 +60,7 @@
                 class="mb-0"
                 @update:modelValue="
                   movieStore.changeDataAtLocalStorage(
+                    movie.id,
                     movie.name,
                     movieLS.rating,
                     movieLS.isMark
@@ -94,17 +95,17 @@ const movieId = computed(() => route.params.movieId)
 const movie = computed(() => movieStore.getMovieById(movieId.value))
 const movieLS = ref({})
 console.log(movieId.value)
-const forCheck = JSON.parse(localStorage.getItem(movie.value.name.toString()))
+const forCheck = JSON.parse(localStorage.getItem(movieId.value.toString()))
 window.scrollTo(0, 0)
 if (!forCheck || Object.keys(forCheck) === 0) {
   movieStore.addMovieToLocalStorage(movie.value)
-  movieLS.value = JSON.parse(localStorage.getItem(movie.value.name.toString()))
-} else {
-  movieLS.value = JSON.parse(localStorage.getItem(movie.value.name.toString()))
+  //movieLS.value = JSON.parse(localStorage.getItem(movieId.value.toString()))
 }
+movieLS.value = JSON.parse(localStorage.getItem(movieId.value.toString()))
 function changeMark() {
   movieLS.value.isMark = !movieLS.value.isMark
   movieStore.changeDataAtLocalStorage(
+    movie.value.id,
     movie.value.name,
     movieLS.value.rating,
     movieLS.value.isMark
