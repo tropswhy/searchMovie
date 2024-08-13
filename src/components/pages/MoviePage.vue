@@ -90,7 +90,6 @@ const route = useRoute()
 const movieId = computed(() => route.params.movieId)
 const movie = computed(() => movieStore.getMovieById(movieId.value))
 const movieLS = ref({})
-console.log(movieId.value)
 const forCheck = JSON.parse(localStorage.getItem(movieId.value.toString()))
 window.scrollTo(0, 0)
 if (!forCheck || Object.keys(forCheck) === 0) {
