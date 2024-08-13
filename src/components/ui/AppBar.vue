@@ -21,8 +21,8 @@
         <v-menu activator="parent">
           <v-list>
             <v-list-item
-              v-for="(item, index) in sortingParametrs"
-              :key="index"
+              v-for="(item) in sortingParametrs"
+              :key="item.id"
               :value="item.parametr"
               @click="sortHandler(item.parametr)"
             >
@@ -41,10 +41,10 @@
 <script setup>
 import { useMovieStore } from '../../stores/MovieStore.js'
 const sortingParametrs = [
-  { title: 'По названию', parametr: 'title' },
-  { title: 'По году выхода', parametr: 'year' },
-  { title: 'По средней оценке', parametr: 'score' },
-  { title: 'По хронометражу', parametr: 'timing' },
+  { id: 1, title: 'По названию', parametr: 'title' },
+  { id: 2, title: 'По году выхода', parametr: 'year' },
+  { id: 3, title: 'По средней оценке', parametr: 'score' },
+  { id: 4, title: 'По хронометражу', parametr: 'timing' },
 ]
 const movieStore = useMovieStore()
 const sortHandler = (param) => {
