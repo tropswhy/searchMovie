@@ -33,8 +33,8 @@
           <h3 class="ml-4">О фильме:</h3>
           <v-list lines="one">
             <v-list-item
-              v-for="(item, i) in aboutMovie"
-              :key="i"
+              v-for="(item) in aboutMovie"
+              :key="item.id"
               :title="item.title + item.value"
               :value="item.value"
             >
@@ -116,22 +116,27 @@ const checkIconMark = computed(() =>
 )
 const aboutMovie = [
   {
+    id: 1,
     title: 'Год производства: ',
     value: movie.value.year,
   },
   {
+    id: 2,
     title: 'Длительность: ',
     value: movie.value.movieLength + ' минут',
   },
   {
+    id: 3,
     title: 'Оценка на КиноПоиске: ',
     value: movie.value.rating.kp,
   },
   {
+    id: 4,
     title: 'Оценка на IMDb: ',
     value: movie.value.rating.imdb,
   },
   {
+    id: 5,
     title: 'Рейтинг критиков: ',
     value:
       movie.value.rating.filmCritics > 0
@@ -139,6 +144,7 @@ const aboutMovie = [
         : 'Рейтинг отсутствует',
   },
   {
+    id: 6,
     title: 'Рейтинг российских критиков: ',
     value:
       movie.value.rating.russianFilmCritics > 0
