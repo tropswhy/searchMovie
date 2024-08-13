@@ -145,7 +145,6 @@ export const useMovieStore = defineStore('movieStore', () => {
   )
 
   return {
-    sortParam,
     movies,
     currentSorting,
     sorting,
