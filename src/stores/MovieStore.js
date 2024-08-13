@@ -10,22 +10,17 @@ export const useMovieStore = defineStore('movieStore', {
   }),
 
   getters: {
-    getTotalPages: (state) => Math.ceil(state.movies.docs.length / 25),
     getMovieById: (state) => (id) =>
       state.movies.docs.find((movie) => movie.id === Number(id)),
     getMovieByName: (state) => (name) =>
       state.movies.docs.find(
         (movie) => movie.name.toLowerCase() === name.toLowerCase()
       ),
-    getMovieFromLS: () => (name) => JSON.parse(localStorage.getItem(name)),
     getMarkedMovies: (state) =>
       state.movies.docs.filter((movie) => {
         let movieLS = state.getMovieFromLS(movie.name)
-        if (movieLS && movieLS.isMark) {
-          return true
-        } else {
-          return false
-        }
+        return movieLS && movieLS.isMark
+
       }),
   },
 
