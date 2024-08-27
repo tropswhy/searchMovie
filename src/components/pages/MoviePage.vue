@@ -103,7 +103,7 @@
 
 <script setup>
 import { useMovieStore } from '../../stores/MovieStore.js'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import MovieCard from '../ui/MovieCard.vue'
 import AppBar from '../ui/AppBar.vue'
@@ -113,6 +113,11 @@ const movieId = computed(() => route.params.movieId)
 const movie = computed(() => movieStore.getMovieById(movieId.value))
 const movieLS = ref({})
 const forCheck = JSON.parse(localStorage.getItem(movieId.value.toString()))
+
+watch(movieId, () => {
+  location.reload()
+  window.scroll(0, 0)
+})
 window.scrollTo(0, 0)
 if (!forCheck) {
   movieStore.addMovieToLocalStorage(movie.value)
