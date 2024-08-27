@@ -114,7 +114,7 @@ const movie = computed(() => movieStore.getMovieById(movieId.value))
 const movieLS = ref({})
 const forCheck = JSON.parse(localStorage.getItem(movieId.value.toString()))
 window.scrollTo(0, 0)
-if (!forCheck || Object.keys(forCheck) === 0) {
+if (!forCheck) {
   movieStore.addMovieToLocalStorage(movie.value)
 }
 movieLS.value = JSON.parse(localStorage.getItem(movieId.value.toString()))
@@ -143,11 +143,6 @@ const recomendations = computed(() => {
         movieRec.year <= movie.value.year + 3 &&
         movieRec.id !== movie.value.id
       )
-      /* (
-        movieRec.rating.kp >= movie.value.rating.kp - 0.1 &&
-        movieRec.rating.kp <= movie.value.rating.kp + 0.1 &&
-        movieRec.id !== movie.value.id
-      ) */
     })
     .slice(0, 4)
 })
