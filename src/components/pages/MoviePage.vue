@@ -33,7 +33,7 @@
           <h3 class="ml-4">О фильме:</h3>
           <v-list lines="one">
             <v-list-item
-              v-for="(item) in aboutMovie"
+              v-for="item in aboutMovie"
               :key="item.id"
               :title="item.title + item.value"
               :value="item.value"
@@ -77,6 +77,27 @@
     class="my-5 mx-auto"
     width="1000"
   >
+    <v-container>
+      <v-row
+        justify="start"
+        align="center"
+        class="mb-5"
+      >
+        <v-col
+          class="text-center"
+          cols="auto"
+          v-for="movie in recomendations"
+        >
+          <MovieCard
+            :name="movie.name"
+            :score="movieStore.countAverageScore(movie)"
+            :year="movie.year"
+            :poster="movie.poster.previewUrl"
+            :id="movie.id"
+          />
+        </v-col>
+      </v-row>
+    </v-container>
   </v-card>
 </template>
 
@@ -84,6 +105,7 @@
 import { useMovieStore } from '../../stores/MovieStore.js'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import MovieCard from '../ui/MovieCard.vue'
 import AppBar from '../ui/AppBar.vue'
 const movieStore = useMovieStore()
 const route = useRoute()
@@ -113,6 +135,22 @@ const checkIconMark = computed(() =>
     ? 'mdi-bookmark-remove-outline'
     : 'mdi-bookmark-plus-outline'
 )
+const recomendations = computed(() => {
+  return movieStore.movies.docs
+    .filter((movieRec) => {
+      return (
+        movieRec.year >= movie.value.year - 3 &&
+        movieRec.year <= movie.value.year + 3 &&
+        movieRec.id !== movie.value.id
+      )
+      /* (
+        movieRec.rating.kp >= movie.value.rating.kp - 0.1 &&
+        movieRec.rating.kp <= movie.value.rating.kp + 0.1 &&
+        movieRec.id !== movie.value.id
+      ) */
+    })
+    .slice(0, 4)
+})
 const aboutMovie = [
   {
     id: 1,
