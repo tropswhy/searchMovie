@@ -89,7 +89,6 @@ const showMovies = computed(() => {
     return m.slice(start, end)
   } else {
     const m = movieStore.sorting(searchMovies.value)
-    //changePage(1)
     return m.slice(start, end)
   }
 })
