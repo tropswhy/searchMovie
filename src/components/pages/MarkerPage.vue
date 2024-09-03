@@ -91,7 +91,7 @@ const paginationLength = computed(() =>
 )
 watch(markedMovies, (newMovies, prevMovies) => {
   if (newMovies.length <= MOVIES_PER_PAGE && prevMovies.length > MOVIES_PER_PAGE){
-    changePage(1)
+    changePage(paginationLength.value)
   } 
 })
 </script>
