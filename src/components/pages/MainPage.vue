@@ -93,7 +93,7 @@ const showMovies = computed(() => {
   }
 })
 const paginationLength = computed(() =>
-  searchMovies.value.length
+  searchMovies.value.length > MOVIES_PER_PAGE
     ? Math.ceil(searchMovies.value.length / MOVIES_PER_PAGE)
     : 1
 )
