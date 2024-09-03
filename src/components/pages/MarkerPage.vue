@@ -86,7 +86,9 @@ const showMovies = computed(() => {
 })
 
 const paginationLength = computed(() =>
-  markedMovies.value.length ? Math.ceil(markedMovies.value.length / MOVIES_PER_PAGE) : 1
+  markedMovies.value.length
+    ? Math.ceil(markedMovies.value.length / MOVIES_PER_PAGE)
+    : 1
 )
 </script>
 <style scoped>
