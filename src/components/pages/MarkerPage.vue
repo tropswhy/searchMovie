@@ -40,7 +40,7 @@
 
 <script setup>
 import { useMovieStore } from '../../stores/MovieStore.js'
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import MovieCard from '../ui/MovieCard.vue'
 import AppBar from '../ui/AppBar.vue'
 
@@ -84,12 +84,16 @@ const showMovies = computed(() => {
   const end = start + MOVIES_PER_PAGE
   return movieStore.sorting(markedMovies.value).slice(start, end)
 })
-
 const paginationLength = computed(() =>
-  markedMovies.value.length
+  markedMovies.value.length > MOVIES_PER_PAGE
     ? Math.ceil(markedMovies.value.length / MOVIES_PER_PAGE)
     : 1
 )
+watch(markedMovies, (newMovies, prevMovies) => {
+  if (newMovies.length <= MOVIES_PER_PAGE && prevMovies.length > MOVIES_PER_PAGE){
+    changePage(1)
+  } 
+})
 </script>
 <style scoped>
 .v-col {
