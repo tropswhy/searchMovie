@@ -27,6 +27,7 @@
           class="text-center"
           v-for="movie in showMovies"
           cols="auto"
+          :key="movie.id"
         >
           <MovieCard
             :name="movie.name"
